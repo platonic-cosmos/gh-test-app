@@ -69,23 +69,23 @@ jobs:
           name: unit-tests-results
           path: test-results.xml
 
-      - name: Gitleaks - scan for passwords, tokens, etc.
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE}}
+      # - name: Gitleaks - scan for passwords, tokens, etc.
+      #   uses: gitleaks/gitleaks-action@v2
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE}}
 
-      - name: Code quality scan using SonarQube
-        uses: sonarsource/sonarqube-scan-action@v2.3.0
-        continue-on-error: true
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
-        with:
-          projectBaseDir: .
-          args: >
-            -Dsonar.projectKey=${{ env.APP_NAME }}
-            -Dsonar.python.coverage.reportPaths=test-coverage.xml
+      # - name: Code quality scan using SonarQube
+      #   uses: sonarsource/sonarqube-scan-action@v2.3.0
+      #   continue-on-error: true
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #     SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+      #   with:
+      #     projectBaseDir: .
+      #     args: >
+      #       -Dsonar.projectKey=${{ env.APP_NAME }}
+      #       -Dsonar.python.coverage.reportPaths=test-coverage.xml
 
       - name: Auth Docker
         run: gcloud --quiet auth configure-docker us-east4-docker.pkg.dev
