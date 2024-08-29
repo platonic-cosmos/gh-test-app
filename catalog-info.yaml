@@ -1,0 +1,42 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: gh-test-app
+  annotations:
+    "backstage.io/project": "png-gcp-learning-poc"
+    "backstage.io/cloud-run": "gh-test"
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: monkmantra/gh-test-app
+    sonarqube.org/project-key: ltimindtreeSonarqube/gh-test
+  links:
+    - url: "https://gh-test-nraemwfzfa-uk.a.run.app"
+      title: Application URL
+      icon: extension
+    - url: "https://console.cloud.google.com/run/detail/us-east4/gh-test/logs?project=png-gcp-learning-poc"
+      title: Logs
+      icon: dashboard
+  tags:
+    - de-ims-app
+spec:
+  type: service
+  owner: user:de-ims
+  lifecycle: experimental
+  dependsOn:
+    - component:default/gh-test-infra
+  providesApis:
+    - gh-test
+
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: gh-test
+  description: The App APIs Specification. 
+  tags:
+    - fastapi
+spec:
+  type: openapi
+  lifecycle: experimental
+  owner: user:de-ims
+  definition:
+    $text: ./fastapi.yaml
